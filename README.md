@@ -9,6 +9,7 @@ This is a web app which allows you to easily generate professional HTML template
 
 ### **How to Use**
 
+1. **Visit This Site to Use the Tool**: "https://qambarofficial.github.io/divsinmail/"
 1. **Enter Name**: Upload the CSV file containing names of employes/clients.
 2. **Select Template(s)**: Choose either:
    - **Invoice Only**
