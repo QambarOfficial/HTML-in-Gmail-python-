@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate HTML DIVs for Gmail</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script> <!-- JSZip library -->
+</head>
+<body>
+    <div class="container">
+        <h1>Generate HTML DIVs for Gmail</h1>
+        
+        <div class="form-container">
+            <input type="file" id="csv-file" accept=".csv" />
+            <select id="template-choice">
+                <option value="1">Invoice</option>
+                <option value="2">Payroll</option>
+                <option value="3">Both</option>
+            </select>
+            <button onclick="generateHTML()">Generate</button>
+        </div>
+        
+        <div id="generated-files">
+            <!-- Generated HTML files will be displayed here -->
+        </div>
+
+        <button id="download-zip" style="display:none;" onclick="downloadZip()">Download All as ZIP</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
