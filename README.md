@@ -1,22 +1,20 @@
-use HTML div's in gmail.
-
 
 ### **Invoice and Payroll Template Generator**
 
-This is a web app which allows you to easily generate professional HTML templates for invoices and payroll slips. It’s perfect for businesses and freelancers who need to quickly create these documents.
+Using this tool you can create multiple html div templates for all names in a csv file, you can change the template in the inputs folder to customise the templates.
+
 
 ---
 
 ### **How to Use**
 
-1. **Visit This Site to Use the Tool**: "https://qambarofficial.github.io/divsinmail/"
-1. **Enter Name**: Upload the CSV file containing names of employes/clients.
-2. **Select Template(s)**: Choose either:
-   - **Invoice Only**
-   - **Payroll Only**
-   - **Both Templates**
-3. **Generate**: Click **Generate Templates** to create the chosen templates.
-4. **Download**: Download the templates individually or as a zip file.
+- Step 1: Go to "https://qambarofficial.github.io/divsinmail/"
+- Step 2: Upload a CSV file using the file input below.
+- Step 3: Select the type of template you'd like to generate (Invoice, Payroll, or Both).
+- Step 4: Click the "Generate" button to create the HTML code.
+- Step 5: Copy the generated code by clicking the "Copy Code" button.
+- Step 6: Open Gmail, start composing an email, right-click, and select "Inspect" to open the developer tools.
+- Step 7: In the developer tools, find the section for the email body, paste the copied HTML code, and you're done!
 
 ---
 
@@ -36,8 +34,7 @@ This tool saves time and ensures consistent, professional documents. Enjoy using
 ---
 
 ### **ScreenShots**
-<img width="1080" alt="Screenshot 2024-10-02 at 10 21 02 PM" src="https://github.com/user-attachments/assets/dabb57e4-f387-4c41-8336-6fc394126057">
 
-
+<img width="1440" alt="Screenshot 2024-10-09 at 12 13 50 AM" src="https://github.com/user-attachments/assets/88489a22-caf4-47c1-85ad-2e7b7718d57d">
 
 
