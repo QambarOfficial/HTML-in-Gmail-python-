@@ -1,10 +1,10 @@
 let generatedFiles = []; // Array to hold all generated HTML files
 
+// Generate HTML content based on CSV file and selected template
 async function generateHTML() {
     const fileInput = document.getElementById('csv-file');
     const templateChoice = document.getElementById('template-choice').value;
     const generatedFilesDiv = document.getElementById('generated-files');
-    const downloadZipButton = document.getElementById('download-zip');
     
     if (!fileInput.files[0]) {
         alert('Please upload a CSV file');
@@ -21,8 +21,12 @@ async function generateHTML() {
         // Skip the first row (header)
         const data = rows.slice(1);
 
-        // Reset the array of generated files
-        generatedFiles = [];
+        // Reset the generated files container
+        generatedFilesDiv.innerHTML = ''; // Clear previous content
+        generatedFiles = []; // Reset the global array for filtering
+
+        // Show the search field after generation starts
+        document.getElementById('search-container').style.display = 'block';
 
         // Generate the HTML for each row in CSV
         for (const row of data) {
@@ -30,38 +34,59 @@ async function generateHTML() {
             if (name) {
                 if (templateChoice == '1' || templateChoice == '3') {
                     let htmlContent = await generateInvoiceHTML(name);  // Await the promise
-                    
-                    // Create downloadable file for invoice
-                    const blob = new Blob([htmlContent], { type: 'text/html' });
-                    const invoiceLink = document.createElement('a');
-                    invoiceLink.href = URL.createObjectURL(blob);
-                    invoiceLink.download = `${name}_invoice.html`;
-                    invoiceLink.innerText = `Download ${name}'s Invoice`;
-                    generatedFilesDiv.appendChild(invoiceLink);
-                    generatedFiles.push({ filename: `${name}_invoice.html`, content: htmlContent });
+                    displayGeneratedContent(`${name}'s Invoice`, htmlContent, generatedFilesDiv, name);
                 }
                 
                 if (templateChoice == '2' || templateChoice == '3') {
                     let htmlContent = await generatePayrollHTML(name);  // Await the promise
-                    
-                    // Create downloadable file for payroll
-                    const blob = new Blob([htmlContent], { type: 'text/html' });
-                    const payrollLink = document.createElement('a');
-                    payrollLink.href = URL.createObjectURL(blob);
-                    payrollLink.download = `${name}_payroll.html`;
-                    payrollLink.innerText = `Download ${name}'s Payroll`;
-                    generatedFilesDiv.appendChild(payrollLink);
-                    generatedFiles.push({ filename: `${name}_payroll.html`, content: htmlContent });
+                    displayGeneratedContent(`${name}'s Payroll`, htmlContent, generatedFilesDiv, name);
                 }
             }
         }
-
-        downloadZipButton.style.display = 'inline-block';
     };
     
     reader.readAsText(file);
 }
 
+// Display the generated HTML in a copyable box with a "Copy Code" button
+function displayGeneratedContent(title, content, parentDiv, name) {
+    // Create a container for each generated content
+    const container = document.createElement('div');
+    container.classList.add('generated-content-box');
+    container.setAttribute('data-name', name.toLowerCase()); // Store the name for filtering
+
+    const titleElem = document.createElement('h3');
+    titleElem.innerText = title;
+
+    const copyBox = document.createElement('textarea'); // Use textarea for easy copying
+    copyBox.readOnly = true;
+    copyBox.style.width = '100%';
+    copyBox.style.height = '150px';
+    copyBox.value = content;
+
+    // Create the "Copy Code" button
+    const copyButton = document.createElement('button');
+    copyButton.innerText = 'Copy Code';
+    copyButton.classList.add('copy-button');
+    
+    // Add click event to copy content to clipboard
+    copyButton.onclick = function() {
+        copyBox.select();
+        document.execCommand('copy'); // Copies the selected text to clipboard
+        alert('Code copied to clipboard!');
+    };
+
+    // Append title, copyable box, and "Copy Code" button to container
+    container.appendChild(titleElem);
+    container.appendChild(copyBox);
+    container.appendChild(copyButton);
+
+    // Append container to parent div
+    parentDiv.appendChild(container);
+
+    // Store this container in the global array for searching
+    generatedFiles.push(container);
+}
 
 // Fetch and generate invoice HTML using the external template
 async function generateInvoiceHTML(name) {
@@ -101,18 +126,17 @@ async function generatePayrollHTML(name) {
     return template;
 }
 
+// Function to filter names in generated content
+function filterNames() {
+    const searchInput = document.getElementById('search-name').value.toLowerCase();
 
-// Function to download all files as a ZIP
-function downloadZip() {
-    const zip = new JSZip();
-
-    // Add each generated file to the ZIP archive
+    // Loop through the generated files and hide or show based on search input
     generatedFiles.forEach(file => {
-        zip.file(file.name, file.content);
-    });
-
-    // Generate and download the ZIP file
-    zip.generateAsync({ type: 'blob' }).then(content => {
-        saveAs(content, 'generated_files.zip');
+        const name = file.getAttribute('data-name');
+        if (name.includes(searchInput)) {
+            file.style.display = 'block';
+        } else {
+            file.style.display = 'none';
+        }
     });
 }

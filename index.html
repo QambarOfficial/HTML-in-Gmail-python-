@@ -5,12 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generate HTML DIVs for Gmail</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script> <!-- JSZip library -->
 </head>
 <body>
     <div class="container">
         <h1>Generate HTML DIVs for Gmail</h1>
         
+        <!-- Instructions section -->
+        <div class="instructions">
+            <h2>How to Use This Tool:</h2>
+            <ol>
+                <li><strong>Step 1:</strong> Upload a CSV file using the file input below.</li>
+                <li><strong>Step 2:</strong> Select the type of template you'd like to generate (Invoice, Payroll, or Both).</li>
+                <li><strong>Step 3:</strong> Click the "Generate" button to create the HTML code.</li>
+                <li><strong>Step 4:</strong> Copy the generated code by clicking the "Copy Code" button.</li>
+                <li><strong>Step 5:</strong> Open Gmail, start composing an email, right-click, and select "Inspect" to open the developer tools.</li>
+                <li><strong>Step 6:</strong> In the developer tools, find the section for the email body, paste the copied HTML code, and you're done!</li>
+            </ol>
+        </div>
+
+        <!-- File input and template selection -->
         <div class="form-container">
             <input type="file" id="csv-file" accept=".csv" />
             <select id="template-choice">
@@ -20,14 +33,18 @@
             </select>
             <button onclick="generateHTML()">Generate</button>
         </div>
-        
+
+        <!-- Search field for filtering generated HTML by name, initially hidden -->
+        <div class="search-container" id="search-container" style="display: none;">
+            <input type="text" id="search-name" placeholder="Search by name..." onkeyup="filterNames()" />
+        </div>
+
+        <!-- Container where the generated HTML files will be displayed -->
         <div id="generated-files">
             <!-- Generated HTML files will be displayed here -->
         </div>
-
-        <button id="download-zip" style="display:none;" onclick="downloadZip()">Download All as ZIP</button>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+
     <script src="script.js"></script>
 </body>
 </html>
